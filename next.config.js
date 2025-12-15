@@ -38,6 +38,7 @@ const nextConfig = {
     '@hanzo/commerce',
     '@luxfi/ui',
     '@luxfi/data',
+    '@luxfi/menu-icons',
     '@luxfi/menu-icons'
   ],
   productionBrowserSourceMaps: true,

@@ -1,38 +1,16 @@
-import React  from 'react'
+import React from 'react'
 
-import { ScreenfulBlockComponent as Screenful } from '@/blocks/overrides/screenful-block'
-
-import { desktopTiles, mobileTiles}  from '@/content'
-import FooterSlide from '@/components/footer-slide'
-import CompatibleSection from '@/components/compatible-section'
-import HeaderNoAuth from '@/components/header-no-auth'
-import siteDef from '@/site-def'
-// Block registration moved to DynamicScreenful (client-side)
-
-interface PageProps {
-  searchParams?: Promise<{ [key: string]: string | string[] | undefined }>
+export default function Page() {
+  return (
+    <div className="flex flex-col items-center justify-center min-h-screen p-8">
+      <h1 className="text-4xl font-bold mb-4">LUX credit</h1>
+      <p className="text-lg text-gray-400 mb-8">Coming soon</p>
+      <a 
+        href="https://lux.network" 
+        className="px-6 py-3 bg-white text-black rounded-lg hover:bg-gray-200 transition"
+      >
+        Learn More
+      </a>
+    </div>
+  )
 }
-
-const Page = async ({ searchParams }: PageProps ) => {
-  const resolvedSearchParams = await searchParams
-    // see src/middleware.ts
-  const agent = resolvedSearchParams?.agent as string
-  const tiles = agent === 'desktop' ? desktopTiles : mobileTiles
-
-  return (<>
-    <HeaderNoAuth siteDef={siteDef}/>
-    {tiles.map((banner, index) => (
-      <Screenful
-        block={banner}
-        initialInView={index === 0}
-        agent={agent}
-        snapTile
-        key={`section-${index}`}
-        contentClx='max-w-screen-2xl'
-      />
-    ))}
-    <FooterSlide agent={agent} />
-  </>)
-}
-
-export default Page

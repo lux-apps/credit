@@ -1,7 +1,6 @@
 'use client'
 
 import { useEffect, useRef, useState } from 'react'
-import { useParams, useSearchParams } from 'next/navigation'
 
 import { useCommerce } from '@hanzo/commerce'
 import type { LineItem } from '@hanzo/commerce/types'
@@ -15,25 +14,27 @@ import CardsBar from './_page/cards-bar'
 
 import cards from '@/content/cards'
 
-const Page = () => {
-  const params = useParams()
-  const searchParams = useSearchParams()
+interface PageProps {
+  params: Promise<{ slug: string }>
+  searchParams?: Promise<{ [key: string]: string | string[] | undefined }>
+}
+
+const Page = async ({ params, searchParams }: PageProps) => {
+  const resolvedParams = await params
+  const resolvedSearchParams = await searchParams
   const cmmc = useCommerce()
 
   const [card, setCard] = useState<Card>()
   const [selectedMaterial, setSelectedMaterial] = useState<CardMaterial>()
   const [lineItem, setLineItem] = useState<LineItem>()
 
-  const slug = params?.slug as string
-  const sku = searchParams?.get('sku')
-
   useEffect(() => {
-    const card = cards.find(card => card.category === slug)
-    const material = card?.materials.find(material => material.sku === sku)
+    const card = cards.find(card => card.category === resolvedParams.slug)
+    const material = card?.materials.find(material => material.sku === resolvedSearchParams?.sku)
 
     setCard(card)
     setSelectedMaterial(material ?? card?.materials[0])
-  }, [slug, sku])
+  }, [resolvedParams, resolvedSearchParams])
 
   useEffect(() => {
     if (selectedMaterial) {

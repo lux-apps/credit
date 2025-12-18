@@ -1,13 +1,10 @@
 const withMDX = require('@next/mdx')()
 const svgrPluginConfig = require('./next-conf/svgr.next.config')
+const watchPluginConfig = require('./next-conf/watch.next.config')
 
 
 /** @type {import('next').NextConfig} */
 const nextConfig = {
-  output: 'export',
-  typescript: { ignoreBuildErrors: true },
-  eslint: { ignoreDuringBuilds: true },
-  images: { unoptimized: true },
   typescript: {
     // TODO: Fix type errors in @hanzo/commerce package
     ignoreBuildErrors: true,
@@ -39,11 +36,14 @@ const nextConfig = {
     '@hanzo/commerce',
     '@luxfi/ui',
     '@luxfi/data',
-    '@luxfi/menu-icons',
     '@luxfi/menu-icons'
   ],
   productionBrowserSourceMaps: true,
-  webpack: svgrPluginConfig
+  webpack: (config) => {
+    let conf = svgrPluginConfig(config)
+    //conf =  watchPluginConfig(conf) 
+    return conf
+  }
 }
 
 module.exports = withMDX(nextConfig)

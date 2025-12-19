@@ -6,8 +6,8 @@ import './globals.css'
 const inter = Inter({ subsets: ['latin'] })
 
 export const metadata: Metadata = {
-  title: "LUX Credit",
-  description: "Access credit and lending services powered by blockchain technology.",
+  title: "LUX Credit - Zero Interest Credit Cards",
+  description: "Build multi-generational wealth with the first zero interest credit card with auto repaying loans. The future of finance is here.",
 }
 
 export const viewport: Viewport = {
